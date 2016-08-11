@@ -25,11 +25,12 @@ const server = http.createServer((req, res) => {
         ],
         (err, result) => {
             // Response
-            res.statusCode = 200;
             if (err) {
+                res.statusCode = 500;
                 res.write(err);
                 console.error(err);
             } else {
+              res.statusCode = 200;
                 res.write(result.join('\n'));
                 console.log('done');
             }
