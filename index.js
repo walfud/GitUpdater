@@ -43,20 +43,22 @@ function invoke(cmd, args, callback) {
     const result = spawn(cmd, args, {
         cwd: commander.workingDir,
     });
-    console.log(`<<<${result.spawnargs.join(" ")}`);
-
-    let stdout = [];
-    let stderr = [];
+    const beginTip = `<<<${result.spawnargs.join(' ')}`;
+    let out = [beginTip];
     result.stdout.on('data', data => {
-        stdout.push(data);
+        out.push(data);
         console.log(data.toString());
     });
     result.stderr.on('data', data => {
-        stderr.push(data);
+        out.push(data);
         console.error(data.toString());
     });
     result.on('exit', (code, signal) => {
-        console.log(`${result.spawnargs.join(" ")}:${code}>>>`);
-        callback(null, `${stdout.toString()}\n${stderr.toString()}`);
+        const endTip = `${result.spawnargs.join(' ')}:${code}>>>`;
+        out.push(endTip);
+        console.log(endTip);
+
+        callback(null, `${out.join('\n')}`);
     });
+    console.log(beginTip);
 }
