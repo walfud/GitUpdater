@@ -55,8 +55,8 @@ function invoke(cmd, args, callback) {
         stderr.push(data);
         console.error(data.toString());
     });
-    result.on('exit', () => {
-        console.log(`${result.spawnargs.join(" ")}>>>`);
-        callback(stderr.toString(), stdout.toString());
+    result.on('exit', (code, signal) => {
+        console.log(`${result.spawnargs.join(" ")}:${code}>>>`);
+        callback(null, `${stdout.toString()}\n${stderr.toString()}`);
     });
 }
