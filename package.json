@@ -17,6 +17,7 @@
     "babel-preset-react": "^6.0.0"
   },
   "dependencies": {
-    "async": "^2.0.1"
+    "async": "^2.0.1",
+    "commander": "^2.9.0"
   }
 }

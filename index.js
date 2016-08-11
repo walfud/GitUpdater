@@ -1,8 +1,14 @@
+import commander from 'commander';
 import http from 'http';
 import series from 'async/series';
 import {
     spawn
 } from 'child_process';
+
+commander
+    .version('0.0.1')
+    .option('-w, --working-dir <path>', 'Repo dir')
+    .parse(process.argv);
 
 const server = http.createServer((req, res) => {
     const headers = req.headers;
@@ -33,7 +39,9 @@ const server = http.createServer((req, res) => {
 server.listen(80);
 
 function invoke(cmd, args, callback) {
-    const result = spawn(cmd, args);
+    const result = spawn(cmd, args, {
+        cwd: commander.workingDir,
+    });
     console.log(result.spawnargs.join(" "));
 
     let stdout = [];
