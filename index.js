@@ -16,7 +16,7 @@ const server = http.createServer((req, res) => {
     const url = req.url;
     let body = [];
 
-    console.log('pulling...');
+    console.log(`pulling...${commander.workingDir}`);
     series([
             callback => invoke('git', ['pull'], callback),
             callback => invoke('git', ['submodule', 'update'], callback),
