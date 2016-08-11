@@ -43,7 +43,7 @@ function invoke(cmd, args, callback) {
     const result = spawn(cmd, args, {
         cwd: commander.workingDir,
     });
-    console.log(result.spawnargs.join(" "));
+    console.log(`<<<${result.spawnargs.join(" ")}`);
 
     let stdout = [];
     let stderr = [];
@@ -56,6 +56,7 @@ function invoke(cmd, args, callback) {
         console.error(data.toString());
     });
     result.on('exit', () => {
+        console.log(`${result.spawnargs.join(" ")}>>>`);
         callback(stderr.toString(), stdout.toString());
     });
 }
